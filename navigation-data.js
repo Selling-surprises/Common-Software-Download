@@ -204,7 +204,7 @@ window.NAV_DATA = {
           "id": "mtk34ubn7xst",
           "name": "WinRAR",
           "url": "https://pan.lanzoui.com/b105455",
-          "note": "WinRAR 压缩文件管理器是一款装机必备的压缩软件与文件解压工具.",
+          "note": "WinRAR 压缩文件管理器是一款装机必备的压缩软件与文件解压工具。",
           "icon": "https://www.winrar.com.cn/favicon.ico"
         }
       ]
