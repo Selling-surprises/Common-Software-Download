@@ -176,7 +176,7 @@ window.NAV_DATA = {
           "id": "mtjz0vx7admn",
           "name": "7-ZIP",
           "url": "https://www.7-zip.org/",
-          "note": "最经典的压缩软件",
+          "note": "最经典的压缩软件。",
           "icon": "https://www.7-zip.org/7ziplogo.png"
         },
         {
