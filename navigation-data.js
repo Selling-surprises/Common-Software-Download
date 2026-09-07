@@ -163,6 +163,13 @@ window.NAV_DATA = {
           "url": "https://picview.org/",
           "note": "PicView 是一款免费开源的跨平台图片查看器，该软件基于.NET Avalonia 框架开发，支持 100+ 种图像格式，具有极速加载、无广告、高度可定制等特点 。",
           "icon": "https://picview.org/favicon.svg"
+        },
+        {
+          "id": "mtqikjvnz8kk",
+          "name": "ACDSee官方免费版",
+          "url": "https://www.acdsee.cn/products/acdsee-official-free",
+          "note": "专业好用的图片管理软件，带来更好的管理体验。",
+          "icon": "https://pc3.gtimg.com/softmgr/logo/48/10574_48_1450855972.png"
         }
       ]
     },
@@ -242,6 +249,49 @@ window.NAV_DATA = {
           "url": "https://nipaplay.aimes-soft.com/",
           "note": "现代、美观、强大的视频播放器。专为极致影音体验而生，无论是本地收藏还是线上追剧，NipaPlay 都能为您带来前所未有的流畅与便捷。",
           "icon": "https://nipaplay.aimes-soft.com/assets/icon.webp"
+        }
+      ]
+    },
+    {
+      "id": "mtqiv3dfre71",
+      "name": "下载工具",
+      "icon": "download",
+      "color": "",
+      "links": [
+        {
+          "id": "mtqixjdvmora",
+          "name": "AB Download Manager",
+          "url": "https://abdownloadmanager.com/",
+          "note": "通过与浏览器的无缝集成从任何地方轻松下载文件，享受快速、免费的下载体验。",
+          "icon": "https://abdownloadmanager.com/assets/app_icon_simple-DyQVbx7O.svg"
+        },
+        {
+          "id": "mtqj44fhxjty",
+          "name": "Ghost Downloader",
+          "url": "https://gd.xychr.com/",
+          "note": "一个可以嗅取页面媒体、录制直播并替换五个工具的下载器。快速、免费且开源。",
+          "icon": "https://gd.xychr.com/favicon.ico"
+        },
+        {
+          "id": "mtqj6k44qzai",
+          "name": "Gopeed",
+          "url": "https://gopeed.com/zh",
+          "note": "支持 HTTP、BT 种子、磁力链接和 ed2k 多协议下载，免费开源，覆盖全平台。",
+          "icon": "https://gopeed.com/images/logo.png"
+        },
+        {
+          "id": "mtqj8ipg47ah",
+          "name": "Neat Download Manager",
+          "url": "https://neatdownloadmanager.com/index.php/en/",
+          "note": "IDM下载器的替代品，官方版本目前只有英文。",
+          "icon": "https://neatdownloadmanager.com/templates/neat/favicon.ico"
+        },
+        {
+          "id": "mtqjbv45lztt",
+          "name": "迅雷",
+          "url": "https://www.mefcl.com/thunder12.html",
+          "note": "家喻户晓的经典下载器。",
+          "icon": "https://www.xunlei.com/apple-touch-icon.png"
         }
       ]
     },
@@ -328,5 +378,5 @@ window.NAV_DATA = {
     "theme": "light",
     "useWallpaper": false
   },
-  "exportedAt": "2026-09-05T12:35:11.590Z"
+  "exportedAt": "2026-09-07T01:02:52.062Z"
 };
