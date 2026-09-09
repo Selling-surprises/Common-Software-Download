@@ -48,6 +48,24 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:40vw;height:4
 .group-hcount{font-size:11px;color:var(--card-text3);text-shadow:var(--card-shadow)}
 .group-hstar{width:16px;height:16px;color:#f59e0b;display:flex;align-items:center;justify-content:center}
 .group-hstar svg{width:100%;height:100%}
+.hot-badge{display:inline-flex;align-items:center;gap:2px;padding:1px 5px;border-radius:4px;background:linear-gradient(135deg,#f97316,#ef4444);color:#fff;font-size:9px;font-weight:700;line-height:1.3;letter-spacing:.5px;flex-shrink:0}
+.hot-badge svg{width:9px;height:9px;flex-shrink:0}
+.dl-overlay{position:fixed;inset:0;background:rgba(10,8,30,0.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+.dl-overlay.open{display:flex}
+.dl-dialog{width:100%;max-width:380px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.dl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dl-title{font-size:15px;font-weight:600}
+.dl-close{background:none;border:none;color:var(--text2);cursor:pointer;padding:4px;display:flex}
+.dl-close:hover{color:var(--text)}
+.dl-name{font-size:12px;color:var(--text2);margin-bottom:14px;word-break:break-all}
+.dl-btn-row{display:flex;flex-direction:column;gap:8px}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border:none;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s}
+.dl-btn svg{width:15px;height:15px}
+.dl-btn-official{background:var(--grad);color:#fff}
+.dl-btn-official:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.dl-btn-backup{background:var(--card-bg);color:var(--text);border:1px solid var(--border)}
+.dl-btn-backup:hover{border-color:var(--ac1);color:var(--ac1)}
+.dl-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:12px}
 .links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding:12px}
 
 /* 链接卡片 */
@@ -59,6 +77,8 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:40vw;height:4
 .card-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .card-info{flex:1;min-width:0}
 .card-name{font-size:13px;font-weight:600;color:var(--card-text);text-shadow:var(--card-shadow);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-name{display:flex;align-items:center;gap:4px;min-width:0}
+.card-name .cn-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .card-url{font-size:11px;color:var(--card-text3);text-shadow:var(--card-shadow);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-note{font-size:11px;color:var(--card-text2);text-shadow:var(--card-shadow);line-height:1.5;margin-bottom:8px;word-break:break-word}
 /* 无匹配 */
@@ -71,6 +91,14 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:40vw;height:4
 .empty-page p{font-size:15px}
 .empty-group{min-height:90px;align-items:center;justify-content:center}
 .empty-group-tip{color:var(--card-text3);font-size:12px;text-align:center;padding:20px}
+
+/* 页脚 */
+.page-footer{margin-top:24px;padding:16px;text-align:center;color:var(--text2);font-size:12px;line-height:1.6;opacity:.8;transition:opacity .2s,color .2s}
+.page-footer.footer-darken{opacity:1}
+.page-footer.footer-bold,.page-footer.footer-bold .footer-copyright,.page-footer.footer-bold .footer-filing{font-weight:600}
+.footer-copyright{white-space:pre-wrap;word-break:break-word}
+.footer-filing{margin-top:4px;white-space:pre-wrap;word-break:break-word;color:var(--text3)}
+.page-footer.footer-darken .footer-filing{color:inherit}
 
 /* 响应式 */
 @media(max-width:768px){
@@ -102,6 +130,10 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:40vw;height:4
     </div>
   </div>
   <div id="groups-wrap" class="groups-wrap"></div>
+  <footer class="page-footer" id="page-footer">
+    <div class="footer-copyright" id="footer-copyright"></div>
+    <div class="footer-filing" id="footer-filing"></div>
+  </footer>
 </div>
 
 <script src="navigation-data.js"></script>
@@ -238,11 +270,13 @@ function render(){
     const colorFg=g.color||'var(--ac1)';
     const sec=document.createElement('div');
     sec.className='group-section';
+    const hotBadge = g.hot ? '<span class="hot-badge" title="热门"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>HOT</span>' : '';
     const starIcon = g.starred ? '<span class="group-hstar" title="重要分组"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>' : '';
     let secHtml='<div class="group-header">'
       +'<div class="group-hicon" style="background:'+escA(colorBg)+';color:'+escA(colorFg)+'">'+iconHtml(g.icon)+'</div>'
       +'<span class="group-hname">'+esc(g.name)+'</span>'
       +starIcon
+      +hotBadge
       +'<span class="group-hcount">'+links.length+' 个链接</span>'
       +'</div>';
     if(links.length===0){
@@ -250,10 +284,14 @@ function render(){
     }else{
       secHtml+='<div class="links-grid">'
         +links.map(l=>{
-          return '<a class="link-card" href="'+escA(l.url)+'" target="_blank" rel="noopener noreferrer" data-link-id="'+escA(l.id)+'" data-name="'+escA(l.name.toLowerCase())+'" data-note="'+escA((l.note||"").toLowerCase())+'" data-url="'+escA(l.url.toLowerCase())+'">'
+          const hotBadge=l.hot?'<span class="hot-badge" title="热门"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>HOT</span>':'';
+          const hasO=!!l.officialOn;
+          const bs=(l.backupOn&&Array.isArray(l.dlBackups))?l.dlBackups.filter(Boolean):[];
+          const hasDl=hasO||bs.length>0;
+          return '<a class="link-card" href="'+escA(l.url)+'" target="_blank" rel="noopener noreferrer" data-link-id="'+escA(l.id)+'" data-name="'+escA(l.name.toLowerCase())+'" data-note="'+escA((l.note||"").toLowerCase())+'" data-url="'+escA(l.url.toLowerCase())+'"'+(hasDl?' data-dl="'+escA(JSON.stringify({n:l.name,o:hasO?l.url:'',bs:bs}))+'"':'')+'">'
             +'<div class="card-top">'
             +'<div class="card-icon" style="background:'+escA(colorBg)+';color:'+escA(colorFg)+'">'+iconHtml(l.icon)+'</div>'
-            +'<div class="card-info"><div class="card-name">'+esc(l.name)+'</div><div class="card-url">'+esc(l.url)+'</div></div>'
+            +'<div class="card-info"><div class="card-name"><span class="cn-text">'+esc(l.name)+'</span>'+hotBadge+'</div><div class="card-url">'+esc(l.url)+'</div></div>'
             +'</div>'
             +(l.note?'<div class="card-note">'+esc(l.note)+'</div>':'')
             +'</a>';
@@ -269,12 +307,72 @@ function render(){
 window.setTheme=setTheme;
 window.filterLinks=filterLinks;
 
+// 下载方式选择弹窗（仅当链接开启了下载地址时触发）
+var _dlCtx=null;
+function openDl(d){
+  var ov=document.getElementById('dl-overlay');
+  if(!ov)return;
+  document.getElementById('dl-name').textContent=d.n||'';
+  var h='';
+  if(d.o)h+='<button class="dl-btn dl-btn-official" type="button" onclick="dlGo(\'o\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>官方链接</button>';
+  (d.bs||[]).forEach(function(u,i){
+    h+='<button class="dl-btn dl-btn-backup" type="button" onclick="dlGo('+i+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>备用下载'+(i>0?(i+1):'')+'</button>';
+  });
+  document.getElementById('dl-btn-row').innerHTML=h;
+  _dlCtx=d;
+  ov.classList.add('open');
+}
+function closeDl(){
+  var ov=document.getElementById('dl-overlay');
+  if(ov)ov.classList.remove('open');
+  _dlCtx=null;
+}
+function dlGo(k){
+  var d=_dlCtx;
+  if(!d)return;
+  var u=(k==='o')?d.o:(d.bs||[])[k];
+  closeDl();
+  if(u)window.open(u,'_blank');
+}
+window.closeDl=closeDl;
+window.dlGo=dlGo;
+document.addEventListener('click',function(e){
+  var t=e.target;
+  while(t&&t!==document.body&&!(t.classList&&t.classList.contains('link-card'))){t=t.parentNode;}
+  if(!t||!t.classList||!t.classList.contains('link-card'))return;
+  var raw=t.getAttribute('data-dl');
+  if(!raw)return;
+  var d=null;
+  try{d=JSON.parse(raw);}catch(err){}
+  if(!d||(!d.o&&!d.b))return;
+  e.preventDefault();
+  openDl(d);
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDl();});
+
 render();
 
-// 运行时应用设置（标题 / favicon / 主题 / 壁纸模式）
+// 运行时应用设置（标题 / favicon / 主题 / 壁纸模式 / 页脚）
 function applySettings(){
   if(SETTINGS.title){document.title=SETTINGS.title;const t=document.getElementById('nav-title');if(t)t.textContent=SETTINGS.title;}
   if(SETTINGS.favicon){const l=document.createElement('link');l.rel='icon';l.href=SETTINGS.favicon;document.head.appendChild(l);}
+  const footer=document.getElementById('page-footer');
+  if(footer){
+    footer.style.display=(SETTINGS.footerText||SETTINGS.filingText)?'':'none';
+    // 加深：去掉半透明遮罩，让文字满不透明度显示（子元素备案行继承颜色）
+    footer.classList.toggle('footer-darken',!!SETTINGS.footerDarken);
+    footer.classList.toggle('footer-bold',!!SETTINGS.footerBold);
+    // 颜色优先级：自定义颜色 > 加深 > 默认主题色
+    if(SETTINGS.footerColor){
+      footer.style.color=SETTINGS.footerColor;
+      const ff=footer.querySelector('.footer-filing');
+      if(ff)ff.style.color='inherit';
+    }
+  }
+  const fc=document.getElementById('footer-copyright');
+  if(fc)fc.textContent=SETTINGS.footerText||'';
+  const ff=document.getElementById('footer-filing');
+  if(ff)ff.textContent=SETTINGS.filingText||'';
   const themeBtns=document.getElementById('theme-btns');
   if(SETTINGS.useWallpaper && SETTINGS.bgDesktop){
     // 壁纸模式：隐藏主题切换按钮
@@ -291,5 +389,16 @@ function applySettings(){
 applySettings();
 })();
 </script>
+<div class="dl-overlay" id="dl-overlay" onclick="if(event.target===this)closeDl()">
+  <div class="dl-dialog" role="dialog" aria-label="选择打开方式">
+    <div class="dl-head">
+      <span class="dl-title">选择打开方式</span>
+      <button class="dl-close" type="button" onclick="closeDl()" aria-label="关闭"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></i></button>
+    </div>
+    <div class="dl-name" id="dl-name"></div>
+    <div class="dl-btn-row" id="dl-btn-row"></div>
+    <div class="dl-hint">点击后将打开新页面</div>
+  </div>
+</div>
 </body>
 </html>
